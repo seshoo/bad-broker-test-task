@@ -8,11 +8,11 @@ use Tests\TestCase;
 class ExampleTest extends TestCase
 {
     /**
-     * A basic test example.
+     * @test
      *
      * @return void
      */
-    public function test_example()
+    public function index_is_working()
     {
         $response = $this->get('/');
 
