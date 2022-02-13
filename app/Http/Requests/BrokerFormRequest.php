@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\DifferenceBetweenTheDatesIsLessInDays;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BrokerFormRequest extends FormRequest
@@ -25,9 +26,25 @@ class BrokerFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'startDate' => 'required|date|date_format:' . static::DATE_FORMAT,
-            'endDate' => 'required|date|after:startDate|before:tomorrow|date_format:' . static::DATE_FORMAT,
-            'amount' => 'required|numeric|gt:0',
+            'startDate' =>
+            [
+                'required',
+                'date',
+                'date_format:' . static::DATE_FORMAT,
+                new DifferenceBetweenTheDatesIsLessInDays('endDate', 60)
+            ],
+            'endDate' => [
+                'required',
+                'date',
+                'after:startDate',
+                'before:tomorrow',
+                'date_format:' . static::DATE_FORMAT,
+            ],
+            'amount' => [
+                'required',
+                'numeric',
+                'gt:0'
+            ],
         ];
     }
 }

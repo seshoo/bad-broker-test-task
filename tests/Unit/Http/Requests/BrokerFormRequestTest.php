@@ -11,6 +11,7 @@ use Tests\TestCase;
 class BrokerFormRequestTest extends TestCase
 {
     const DATE_FORMAT = 'Y-m-d';
+    const DIFFERENT_DAYS = 60;
 
     const WRONG_DATE_FORMATS = [
         "d-m-Y",
@@ -47,7 +48,10 @@ class BrokerFormRequestTest extends TestCase
         $dataSets = [];
 
         $endDate = $faker->dateTimeBetween('-1 year', '+0 day');
-        $startDate =  $faker->dateTimeBetween('-1 year', $endDate);
+        $startDate =  $faker->dateTimeBetween(
+            (clone $endDate)->modify('-' . static::DIFFERENT_DAYS . ' days'),
+            $endDate
+        );
         $dataSets['request should pass when data is provided'] = [
             'passed' => true,
             'data' => [
@@ -118,7 +122,10 @@ class BrokerFormRequestTest extends TestCase
         ];
 
         $endDate = $faker->dateTimeBetween('-1 year', '+0 day');
-        $startDate =  $faker->dateTimeBetween('-1 year', $endDate);
+        $startDate =  $faker->dateTimeBetween(
+            (clone $endDate)->modify('-' . static::DIFFERENT_DAYS . ' days'),
+            $endDate
+        );
         $dataSets['request should fail when start data has wrong format'] = [
             'passed' => false,
             'data' => [
@@ -129,7 +136,10 @@ class BrokerFormRequestTest extends TestCase
         ];
 
         $endDate = $faker->dateTimeBetween('-1 year', '+0 day');
-        $startDate =  $faker->dateTimeBetween('-1 year', $endDate);
+        $startDate =  $faker->dateTimeBetween(
+            (clone $endDate)->modify('-' . static::DIFFERENT_DAYS . ' days'),
+            $endDate
+        );
         $dataSets['request should fail when end data has wrong format'] = [
             'passed' => false,
             'data' => [
@@ -140,7 +150,10 @@ class BrokerFormRequestTest extends TestCase
         ];
 
         $endDate = $faker->dateTimeBetween('-1 year', '+0 day');
-        $startDate =  $faker->dateTimeBetween('-1 year', $endDate);
+        $startDate =  $faker->dateTimeBetween(
+            (clone $endDate)->modify('-' . static::DIFFERENT_DAYS . ' days'),
+            $endDate
+        );
         $dataSets['request should fail when amount missing'] = [
             'passed' => false,
             'data' => [
@@ -150,7 +163,10 @@ class BrokerFormRequestTest extends TestCase
         ];
 
         $endDate = $faker->dateTimeBetween('-1 year', '+0 day');
-        $startDate =  $faker->dateTimeBetween('-1 year', $endDate);
+        $startDate =  $faker->dateTimeBetween(
+            (clone $endDate)->modify('-' . static::DIFFERENT_DAYS . ' days'),
+            $endDate
+        );
         $dataSets['request should fail when amount is not numeral'] = [
             'passed' => false,
             'data' => [
@@ -161,7 +177,10 @@ class BrokerFormRequestTest extends TestCase
         ];
 
         $endDate = $faker->dateTimeBetween('-1 year', '+0 day');
-        $startDate =  $faker->dateTimeBetween('-1 year', $endDate);
+        $startDate =  $faker->dateTimeBetween(
+            (clone $endDate)->modify('-' . static::DIFFERENT_DAYS . ' days'),
+            $endDate
+        );
         $dataSets['request should fail when amount less zero'] = [
             'passed' => false,
             'data' => [
@@ -170,7 +189,6 @@ class BrokerFormRequestTest extends TestCase
                 'amount' =>  $faker->numberBetween(-50, -1),
             ]
         ];
-
         return $dataSets;
     }
 
